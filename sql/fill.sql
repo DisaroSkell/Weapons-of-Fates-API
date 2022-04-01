@@ -1,7 +1,4 @@
-insert into Rarity (NameR) values ('Common');
-insert into Rarity (NameR) values ('Rare');
-insert into Rarity (NameR) values ('Epic');
-insert into Rarity (NameR) values ('Legendary');
+insert into Rarity (NameR) values ('Common'), ('Rare'), ('Epic'), ('Legendary');
 
 insert into TypeW (NameTW) values ('Sword');
 
