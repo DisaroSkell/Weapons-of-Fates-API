@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require("cors")
 const app = express()
-const port = 6942
+const port = process.env.PORT ? process.env.PORT : 6942
 
 const corsOptions = {
     origin: "*"
@@ -33,6 +33,12 @@ require("./routes/Rarity")(app)
 require("./routes/TypeW")(app)
 
 require("./routes/Weapons")(app)
+
+app.get('*', (req,res) => {
+    res.status(404).send({
+        message: `Cannot find resource`
+    })
+})
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`)
