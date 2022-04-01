@@ -1,18 +1,17 @@
 const fs = require('fs')
-const { Client } = require('pg')
+require('dotenv').config()
 
-const db = new Client({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'wof_rpg',
-  password: '1234',
-  port: 5432,
+const { Pool } = require('pg')
+const isProduction = process.env.NODE_ENV === 'production'
+
+const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
+
+const db = new Pool({
+  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+  ssl: isProduction,
 })
 
-db.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected to database " + db.database + "!");
-})
+console.log("Connected to database!");
 
 const sql_create = fs.readFile(__dirname + "/../sql/tables.sql", function (err, data) {
     if (err) {
